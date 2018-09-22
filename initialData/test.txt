@@ -1,0 +1,74 @@
+if(author.length == 1){
+                    name = author[0].split(" ");
+                    fname = name[0];
+                    lname = "";
+                    minit="";
+                    if(name.length == 3){
+                        minit = name[1];
+                        lname = name[2];
+                    }
+                    else if (name.length ==2){
+                        minit = "";
+                        lname = name[1];
+                    }
+                    else{
+                        fname = "none";
+                        lname = "none";
+                        minit = "none";
+                    }
+                    DBcommander.command("update book_authors set author_name = '" + author[0] + "', fname = '" + fname + "', lname = '" +lname + "', minit = ' " + minit +"' where book_id = '" + book_id +"';", conn);
+                    
+                }
+                else{
+                    for(int i = 0; i < author.length; i++){
+                        if(i == 0){// first author of multiple authors
+                            name = author[i].split(" ");
+                            fname = name[0];
+                            lname = "";
+                            minit="";
+                            if(name.length == 3){
+                                minit = name[1];
+                                lname = name[2];
+                            }
+                            else if (name.length ==2){
+                                minit = "";
+                                lname = name[1];
+                            }
+                            else{
+                                fname = "none";
+                                lname = "none";
+                                minit = "none";
+                            }
+                        }
+                        else{
+                        name = author[i].split(" ");
+                            fname = name[1];
+                            lname = "";
+                            minit="";
+                            if(name.length == 4){
+                                minit = name[2];
+                                lname = name[3];
+                            }
+                            else if (name.length ==3){
+                                minit = "";
+                                lname = name[2];
+                            }
+                            else{
+                                fname = "none";
+                                lname = "none";
+                                minit = "none";
+                            }
+                        }
+
+                    //String lname = name[2];
+                    //System.out.println(split.length);
+                    //System.out.println("book_id: " + book_id +" lanme:" + lname + " minit: " + minit + " fname:" + fname + " title:" + title);
+                        System.out.println("book_id: " + book_id + " author:" + author[i]);
+
+                        if(i == 0){
+                            DBcommander.command("update book_authors set author_name = '" + author[0] + "', fname = '" + fname + "', lname = '" +lname + "', minit = ' " + minit +"' where book_id = '" + book_id +"';", conn);
+                        }
+                        else{
+                            DBcommander.command("insert into book_authors values('" + book_id + "', '" + author[i] + "','" + fname +"', '" + minit + "', '" + lname + "');",conn);
+                        }
+                    }
